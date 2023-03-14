@@ -1,0 +1,50 @@
+0 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'run', 'watch' ]
+1 info using npm@8.5.1
+2 info using node@v12.22.9
+3 timing npm:load:whichnode Completed in 0ms
+4 timing config:load:defaults Completed in 1ms
+5 timing config:load:file:/usr/share/nodejs/npm/npmrc Completed in 2ms
+6 timing config:load:builtin Completed in 2ms
+7 timing config:load:cli Completed in 1ms
+8 timing config:load:env Completed in 0ms
+9 timing config:load:file:/home/kdh/Project/example-app/.npmrc Completed in 0ms
+10 timing config:load:project Completed in 1ms
+11 timing config:load:file:/home/kdh/.npmrc Completed in 0ms
+12 timing config:load:user Completed in 0ms
+13 timing config:load:file:/etc/npmrc Completed in 0ms
+14 timing config:load:global Completed in 0ms
+15 timing config:load:validate Completed in 0ms
+16 timing config:load:credentials Completed in 0ms
+17 timing config:load:setEnvs Completed in 1ms
+18 timing config:load Completed in 7ms
+19 timing npm:load:configload Completed in 7ms
+20 timing npm:load:setTitle Completed in 0ms
+21 timing config:load:flatten Completed in 2ms
+22 timing npm:load:display Completed in 3ms
+23 verbose logfile /home/kdh/.npm/_logs/2023-03-02T05_54_32_421Z-debug-0.log
+24 timing npm:load:logFile Completed in 3ms
+25 timing npm:load:timers Completed in 0ms
+26 timing npm:load:configScope Completed in 0ms
+27 timing npm:load Completed in 14ms
+28 silly logfile start cleaning logs, removing 1 files
+29 timing command:run Completed in 5ms
+30 verbose stack Error: Missing script: "watch"
+30 verbose stack
+30 verbose stack To see a list of scripts, run:
+30 verbose stack   npm run
+30 verbose stack     at RunScript.run (/usr/share/nodejs/npm/lib/commands/run-script.js:95:13)
+30 verbose stack     at async module.exports (/usr/share/nodejs/npm/lib/cli.js:66:5)
+31 verbose cwd /home/kdh/Project/example-app
+32 verbose Linux 5.15.0-60-generic
+33 verbose argv "/usr/bin/node" "/usr/bin/npm" "run" "watch"
+34 verbose node v12.22.9
+35 verbose npm  v8.5.1
+36 error Missing script: "watch"
+36 error
+36 error To see a list of scripts, run:
+36 error   npm run
+37 verbose exit 1
+38 timing npm Completed in 103ms
+39 verbose code 1
+40 error A complete log of this run can be found in:
+40 error     /home/kdh/.npm/_logs/2023-03-02T05_54_32_421Z-debug-0.log
