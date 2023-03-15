@@ -52,7 +52,7 @@
                             비회원
                         @endif
                     </td>
-                    <td onclick="window.location.href='{{ route('boards.show', $board->idx) }}'">{{ $board->created_at->format('Y-m-d') }}</td>
+                    <td onclick="window.location.href='{{ route('boards.show', $board->idx) }}'">{{ $board->created_at ? $board->created_at->format('Y-m-d') : "시간 체크중" }}</td>
                     <td>
                         @if ($board->user)
                             <a href="{{ route('boards.edit', $board->idx) }}" class="btn btn-sm btn-primary">수정</a>
@@ -144,10 +144,10 @@
             $.post('{{ route('boards.checkPassword') }}', {
                 _token: '{{ csrf_token() }}',
                 password: password,
-                board_idx: '{{ $board->idx }}'
+                board_idx: '{{ $board->idx ?? '' }}'
             }).done(function(response) {
                 console.log(password);
-                console.log('{{ $board->idx }}');
+                console.log('{{ $board->idx ?? '' }}');
                 console.log(response);
                 if (response.result == 'success') {
                     if (actionType == 'edit') {
