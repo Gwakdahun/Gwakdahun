@@ -13,14 +13,14 @@ return new class extends Migration
     public function up() {
 
         Schema::create('boards', function (Blueprint $table) {
-            $table->unsignedInteger('idx');
+            $table->id('idx');
             $table->unsignedBigInteger('user_idx')->nullable();
             $table->string('title', 100);
             $table->string('content', 255);
             $table->string('boardPw', 255)->nullable();
             $table->timestamps();
             // 외래키
-            $table->foreign('user_idx')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_idx')->references('idx')->on('users')->onDelete('cascade');
         });
     }
 
