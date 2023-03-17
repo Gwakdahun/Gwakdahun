@@ -35,6 +35,7 @@ Route::get('/', function () {
 // resource 사용 시 자동으로 GET, POST, PUT/PATCH, DELETE 등 HTTP 요청에 따른 메소드가 호출된다.
 Route::resource('/boards', BoardController::class);
 Route::post('/boards/checkPassword', [BoardController::class, 'checkPassword'])->name('boards.checkPassword');
+Route::post('/boards/destroy', [BoardController::class, 'destroy'])->name('boards.destroy');
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

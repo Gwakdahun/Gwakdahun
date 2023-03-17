@@ -42,9 +42,14 @@
         {{-- blade 에서는 아래 방식으로 반복문을 처리합니다. --}}
         {{-- board Controller의 index에서 넘긴 $boards(board 데이터 리스트)를 출력해줍니다. --}}
             @foreach ($boards as $board)
-                <tr>
+                <tr id="{{ $board->idx }}">
+                    {{-- 아래 코드는 좋지 않은 예시 html에서 값을 유추해서 의도하지 않은 페이지로 들어갈 수 있다. --}}
                     <td onclick="window.location.href='{{ route('boards.show', $board->idx) }}'">{{ $board->title }}</td>
                     <td onclick="window.location.href='{{ route('boards.show', $board->idx) }}'">{{ Str::limit($board->content, 50) }}</td>
+
+                    {{-- 해당 코드처럼 <a>태그를 작성하면 좋지만 td 적용 어떻게하는지 모르겠음 --}}
+                    {{-- <td><a href="{{ route('boards.show', $board->idx) }}">{{ Str::limit($board->content, 50) }}</a></td> --}}
+
                     <td onclick="window.location.href='{{ route('boards.show', $board->idx) }}'">
                         @if($board->user)
                             {{ $board->user->name }}
@@ -52,7 +57,7 @@
                             비회원
                         @endif
                     </td>
-                    <td onclick="window.location.href='{{ route('boards.show', $board->idx) }}'">{{ $board->created_at ? $board->created_at->format('Y-m-d') : "시간 체크중" }}</td>
+                    <td onclick="window.location.href='{{ route('boards.show', $board->idx) }}'">{{ $board->created_at ? $board->created_at->format('Y-m-d') : "" }}</td>
                     <td>
                         @if ($board->user)
                             <a href="{{ route('boards.edit', $board->idx) }}" class="btn btn-sm btn-primary">수정</a>
@@ -66,7 +71,7 @@
                             @if ($board->user)
                                 <button type="submit" class="btn btn-sm btn-danger">삭제</button>
                             @else
-                                <button type="submit" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#password-modal" id="delete-btn">삭제</button>
+                                <button type="submit" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#password-modal" name="del-btn">삭제</button>
                             @endif
                         </form>
                     </td>
@@ -114,25 +119,35 @@
         $(document).ready(function() {
             var actionType;
             var actionUrl;
+            var board_idx;
 
-            $('a#edit-btn').on('click', function(e) {
+            $('a#edit-btn', 'tr').on('click', function(e) {
                 // e.preventDefault() : 해당 이벤트의 기본 동작을 중지하는 역할을 한다.
                 e.preventDefault();
+
+                board_idx = $(this).parents('tr').attr('id');
 
                 // 수정 버튼 클릭 시, actionType 변수에 'edit' 값을 저장한다.
                 actionType = 'edit';
                 actionUrl = $(this).attr('href');
+                console.log(actionUrl);
                 $('#password-modal').modal('show');
             });
 
-            $('button#delete-btn').on('click', function(e) {
+            $('button[name="del-btn"]', 'tr').on('click', function(e) {
                 e.preventDefault();
+
+                board_idx = $(this).parents('tr').attr('id');
+                console.log(board_idx);
 
                 // 삭제 버튼 클릭 시, actionType 변수에 'delete' 값을 저장한다.
                 actionType = 'delete';
-                actionUrl = $(this).parent().attr('action');
+                actionUrl = $(this).parent('form').attr('action');
+
+                console.log(actionUrl);
 
                 $('#password-modal').modal('show');
+
             });
 
             // 확인 버튼 클릭 시, 서버로 비밀번호 검증 요청을 보내고, 결과에 따라 작업을 수행합니다.
@@ -144,18 +159,42 @@
             $.post('{{ route('boards.checkPassword') }}', {
                 _token: '{{ csrf_token() }}',
                 password: password,
-                board_idx: '{{ $board->idx ?? '' }}'
+                board_idx: board_idx,
             }).done(function(response) {
-                console.log(password);
-                console.log('{{ $board->idx ?? '' }}');
-                console.log(response);
+                // console.log(password);
+                // console.log(board_idx);
+                // console.log(response);
                 if (response.result == 'success') {
                     if (actionType == 'edit') {
                         window.location.href = actionUrl;
 
                     } else if (actionType == 'delete') {
                         if (confirm('삭제하겠습니까?')) {
-                            window.location.href = actionUrl;
+                            // console.log(actionUrl);
+                            // window.location.href = actionUrl;
+
+                            $.ajax ({
+                                type: 'post',
+                                url: '{{ route('boards.destroy') }}',
+                                headers: {
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                    'X-HTTP-Method-Override': 'DELETE',
+                                    'X-Requested-With': 'XMLHttpRequest',
+                                },
+                                data: {
+                                    board_idx: board_idx,
+                                },
+                                success: function(response) {
+                                    console.log(response);
+                                    console.log('성공');
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    console.log(jqXHR.responseText);
+                                    console.log(textStatus);
+                                    console.log(errorThrown);
+                                    console.log(actionUrl);
+                                }
+                            });
                         }
                     }
                 } else {
