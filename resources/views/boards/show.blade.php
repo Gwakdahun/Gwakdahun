@@ -24,10 +24,10 @@
 
         <div class="card-footer text-muted">
             @if($board->user)
-            {{ $board->user->name }}
-        @else
-            비회원
-        @endif
+                {{ $board->user->name }}
+            @else
+                비회원
+            @endif
         </div>
 
         <div class="card-footer text-muted">

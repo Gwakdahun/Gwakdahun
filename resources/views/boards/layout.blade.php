@@ -21,10 +21,11 @@
                     {{ Auth::user()->name }} 님
                     <button type="submit" class="btn btn-sm btn-secondary">로그아웃</button>
                 </form>
-
             @else
                 <a href="{{ route('login') }}">로그인</a>
             @endauth
+            <a href=""></a>
+
             @yield('content')
             @yield('modal')
             @yield('script')

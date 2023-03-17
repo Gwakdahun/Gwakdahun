@@ -6,7 +6,6 @@ use App\Models\Board;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 
 class BoardController extends Controller {
 
@@ -37,7 +36,7 @@ class BoardController extends Controller {
         $board->content = $request->content;
 
         if (!$user) {
-            if(@empty($request->user_idx)) {
+            if(empty($request->user_idx)) {
                 $board->user_idx = $request->user_idx;
                 $board->boardPw = Hash::make($request->boardPw);  // 비밀번호 해쉬화
             }
@@ -90,8 +89,6 @@ class BoardController extends Controller {
 
     public function destroy(Board $board) {
 
-        Log::info('destroy method is executed.');
-
         if ($board->user_idx != Auth::id()) {
             return redirect()->route('boards.index')
             ->with('error', '해당 사용자만 삭제할 수 있습니다.');
@@ -106,7 +103,8 @@ class BoardController extends Controller {
     public function checkPassword(Request $request) {
         $boardPw = $request->input('password');
         $board = Board::find($request->input('board_idx'));
-        if (!$board) {
+        // if (!$board) {
+        if (isset($board)) {
             return response()->json(['result' => 'fail', 'message' => '해당 게시물을 찾을 수 없습니다.']);
         };
 
