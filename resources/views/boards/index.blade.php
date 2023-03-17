@@ -69,6 +69,7 @@
                         <form action="{{ route('boards.destroy', $board->idx) }}" method="POST" style="display: inline-block">
                             @csrf
                             {{-- HTML 양식은 PUT, PATCH, DELETE를 요청할 수 없다. 이러한 동작을 하려면 method 필드를 추가해야한다. --}}
+                            {{-- @method('DELETE') 는 바로가기 같은 느낌 --}}
                             @method('DELETE')
                             @if ($board->user)
                                 <button type="submit" class="btn btn-sm btn-danger">삭제</button>
@@ -158,6 +159,7 @@
                     // $.post() : jQuery 에서 제공하는 Ajax 메소드 중 하나이다. 해당 메소드는 서버에 데이터를 보내고
                     // 서버에서 반환하는 응답 데이터를 받아올 수 있다. 얘는 비밀번호 검증 결과를 받아온다.
                     $.post('{{ route('boards.checkPassword') }}', {
+                        _token: '{{ csrf_token() }}',
                         password: password,
                         boardIdx: boardIdx,
                     }).done(function(response) {
