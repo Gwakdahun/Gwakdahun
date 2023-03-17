@@ -93,9 +93,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                 <h5 class="modal-title">Enter Password</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" aria-hidden="true">
-                    {{-- <span aria-hidden="true">&times;</span> --}}
-                </button>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" aria-hidden="true"></button>
                 </div>
 
                 <div class="modal-body">
@@ -160,7 +158,6 @@
                     // $.post() : jQuery 에서 제공하는 Ajax 메소드 중 하나이다. 해당 메소드는 서버에 데이터를 보내고
                     // 서버에서 반환하는 응답 데이터를 받아올 수 있다. 얘는 비밀번호 검증 결과를 받아온다.
                     $.post('{{ route('boards.checkPassword') }}', {
-                        _token: '{{ csrf_token() }}',
                         password: password,
                         board_idx: board_idx,
                     }).done(function(response) {
@@ -173,7 +170,7 @@
                             } else if (actionType == 'delete') {
 
                                 if (confirm('삭제하겠습니까?')) {
-
+                                    // 로직이나 비교를 Ajax에서 처리할 필요가 없다. 여기선 데이터만 주고받고 검증은 Controller 에서 하면 된다.
                                 }
                             }
                         } else {
