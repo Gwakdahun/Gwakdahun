@@ -119,14 +119,14 @@
         $(document).ready(function() {
                 var actionType;
                 var actionUrl;
-                var board_idx;
+                var boardIdx;
 
                 $('a#edit-btn', 'tr').on('click', function(e) {
 
                     // e.preventDefault() : 해당 이벤트의 기본 동작을 중지하는 역할을 한다.
                     e.preventDefault();
 
-                    board_idx = $(this).parents('tr').attr('id');
+                    boardIdx = $(this).parents('tr').attr('id');
 
                     // 수정 버튼 클릭 시, actionType 변수에 'edit' 값을 저장한다.
                     actionType = 'edit';
@@ -138,8 +138,8 @@
                 $('button[name="del-btn"]', 'tr').on('click', function(e) {
                     e.preventDefault();
 
-                    board_idx = $(this).parents('tr').attr('id');
-                    console.log(board_idx);
+                    boardIdx = $(this).parents('tr').attr('id');
+                    console.log(boardIdx);
 
                     // 삭제 버튼 클릭 시, actionType 변수에 'delete' 값을 저장한다.
                     actionType = 'delete';
@@ -159,7 +159,7 @@
                     // 서버에서 반환하는 응답 데이터를 받아올 수 있다. 얘는 비밀번호 검증 결과를 받아온다.
                     $.post('{{ route('boards.checkPassword') }}', {
                         password: password,
-                        board_idx: board_idx,
+                        boardIdx: boardIdx,
                     }).done(function(response) {
                         // console.log(password);
                         // console.log(board_idx);
@@ -170,7 +170,34 @@
                             } else if (actionType == 'delete') {
 
                                 if (confirm('삭제하겠습니까?')) {
+                                    window.location.href = actionUrl;
                                     // 로직이나 비교를 Ajax에서 처리할 필요가 없다. 여기선 데이터만 주고받고 검증은 Controller 에서 하면 된다.
+                                    // 모달을 타지않고 상세보기에서 패스워드 창을 만들어 검증 후 바로 삭제 및 수정을 해도 괜찮다.
+                                    console.log(actionUrl);
+                                    window.location.href = actionUrl;
+
+                                    // $.ajax ({
+                                    //     type: 'post',
+                                    //     url: '{{ route('boards.destroy') }}',
+                                    //     headers: {
+                                    //         'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                    //         'X-HTTP-Method-Override': 'DELETE',
+                                    //         'X-Requested-With': 'XMLHttpRequest',
+                                    //     },
+                                    //     data: {
+                                    //         board_idx: board_idx,
+                                    //     },
+                                    //     success: function(response) {
+                                    //         console.log(response);
+                                    //         console.log('성공');
+                                    //     },
+                                    //     error: function(jqXHR, textStatus, errorThrown) {
+                                    //         console.log(jqXHR.responseText);
+                                    //         console.log(textStatus);
+                                    //         console.log(errorThrown);
+                                    //         console.log(actionUrl);
+                                    //     }
+                                    // });
                                 }
                             }
                         } else {
