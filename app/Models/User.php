@@ -50,8 +50,4 @@ class User extends Authenticatable
         return $this->hasMany(Board::class, 'user_idx');
     }
 
-    // public function getRouteKeyName()
-    // {
-    //     return 'idx';
-    // }
 }

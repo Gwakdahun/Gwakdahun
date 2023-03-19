@@ -175,31 +175,9 @@
                                     window.location.href = actionUrl;
                                     // 로직이나 비교를 Ajax에서 처리할 필요가 없다. 여기선 데이터만 주고받고 검증은 Controller 에서 하면 된다.
                                     // 모달을 타지않고 상세보기에서 패스워드 창을 만들어 검증 후 바로 삭제 및 수정을 해도 괜찮다.
-                                    console.log(actionUrl);
-                                    window.location.href = actionUrl;
+                                    // console.log(actionUrl);
+                                    // window.location.href = actionUrl;
 
-                                    // $.ajax ({
-                                    //     type: 'post',
-                                    //     url: '{{ route('boards.destroy') }}',
-                                    //     headers: {
-                                    //         'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                    //         'X-HTTP-Method-Override': 'DELETE',
-                                    //         'X-Requested-With': 'XMLHttpRequest',
-                                    //     },
-                                    //     data: {
-                                    //         board_idx: board_idx,
-                                    //     },
-                                    //     success: function(response) {
-                                    //         console.log(response);
-                                    //         console.log('성공');
-                                    //     },
-                                    //     error: function(jqXHR, textStatus, errorThrown) {
-                                    //         console.log(jqXHR.responseText);
-                                    //         console.log(textStatus);
-                                    //         console.log(errorThrown);
-                                    //         console.log(actionUrl);
-                                    //     }
-                                    // });
                                 }
                             }
                         } else {

@@ -3,7 +3,6 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\RegisterController;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,4 +39,6 @@ Route::post('/boards/checkPassword', [BoardController::class, 'checkPassword'])-
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/register', [RegisterController::class, 'showRegisterationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
 

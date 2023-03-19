@@ -103,7 +103,7 @@ class BoardController extends Controller {
     public function checkPassword(Request $request) {
         $boardPw = $request->input('password');
         $board = Board::find($request->input('boardIdx'));
-        // if (!$board) {
+
         if (isset($board)) {
             return response()->json(['result' => 'fail', 'message' => '해당 게시물을 찾을 수 없습니다.']);
         };

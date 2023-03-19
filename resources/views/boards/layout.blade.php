@@ -22,8 +22,9 @@
                     <button type="submit" class="btn btn-sm btn-secondary">로그아웃</button>
                 </form>
             @else
-                <a href="{{ route('login') }}">로그인 / </a>
-                {{-- <a href="{{ route('register') }}">회원가입</a> --}}
+                <a href="{{ route('login') }}">로그인</a>
+                /
+                <a href="{{ route('register') }}">회원가입</a>
             @endauth
 
             @yield('content')
