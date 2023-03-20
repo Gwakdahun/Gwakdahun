@@ -52,15 +52,9 @@ class RegisterController extends Controller {
         event(new Registered($user = $this->create($request->all())));
 
         // $user 객체를 받은 후 로그인
-        if($user->email_verified_at) {
-
             Auth::login($user);
 
             return redirect()->route('boards.index');
-        } else {
-            return redirect()->route('boards.mailError');
-        }
-
     }
 
     protected function registered($user) {
