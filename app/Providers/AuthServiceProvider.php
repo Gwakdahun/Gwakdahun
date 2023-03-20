@@ -24,13 +24,11 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
             return (new MailMessage)
                 ->subject('인증 메일이 도착했습니다.')
                 ->line('안심하세요~')
                 ->action('인증버튼', $url);
         });
-
     }
 }

@@ -72,10 +72,22 @@
 
 
                             {{-- 보내기 --}}
+                            <form>
+                                <div class="form-group row mb-0">
+                                    <div class="col-md-6 offset-md-4">
+                                        <button type="submit" class="btn btn-primary">
+                                        회원가입
+                                        </button>
+                                    </div> {{-- col-md-6 offset-md-4 end --}}
+                                </div> {{-- form-group row mb-0 end --}}
+                            </form>
+
+
+                            {{-- 보내기 --}}
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
-                                       회원가입
+                                    회원가입
                                     </button>
                                 </div> {{-- col-md-6 offset-md-4 end --}}
                             </div> {{-- form-group row mb-0 end --}}
