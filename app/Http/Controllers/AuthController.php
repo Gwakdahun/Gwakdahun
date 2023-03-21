@@ -22,18 +22,26 @@ class AuthController extends Controller
             // 인증에 성공 시 세션을 다시 생성한다. 보안 상의 이유이며 하이재킹과 같은 공격을 방지하기 위함.
             $request->session()->regenerate();
 
-            //현재 로그인된 사용자를 가져온다.
-            // $user = Auth::user();
+            if(Auth::user()->email_verified_at) {
 
-            // 사용자가 로그인을 시도하기 전에 원래의 목적지로 사용자를 다시 보낸다.
-            // 사용자가 로그인 페이지가 아닌 다른 페이지에서 로그인 페이지로 리다이렉션되었을 경우 유용하다.
-            return Redirect()->intended('/boards');
-        }
+                // 사용자가 로그인을 시도하기 전에 원래의 목적지로 사용자를 다시 보낸다.
+                // 사용자가 로그인 페이지가 아닌 다른 페이지에서 로그인 페이지로 리다이렉션되었을 경우 유용하다.
+                return Redirect()->intended('/boards');
+            } else {
+
+                Auth::logout();
+
+                return back()->withErrors([
+                    'email' => '이메일 인증을 완료해주세요.',
+                ]);
+            } // else end
+        } // attempt end
 
         return back()->withErrors([
             'email' => '이메일 또는 비밀번호가 일치하지 않습니다.',
-        ]);
+        ]); // Errors end
     }
+
 
     public function logout(Request $request) {
         // 현재 인증된 사용자를 로그아웃한다.

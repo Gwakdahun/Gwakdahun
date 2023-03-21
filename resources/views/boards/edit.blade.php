@@ -18,12 +18,12 @@
             <textarea name="content" id="content" rows="5" class="form-control" style="resize: none";>{{ $board->content }}</textarea>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" style="display: inline-block;">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
 
+        <a href="{{ route('boards.index') }}">
+            <button type="button" class="btn btn-dark" style="display: inline-block;">Back</button>
+        </a>
     </form>
-    <a href="{{ route('boards.index') }}">
-        <button type="button" class="btn btn-dark" style="float: right;">Back</button>
-    </a>
 @endsection

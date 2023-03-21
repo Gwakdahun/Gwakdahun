@@ -37,8 +37,9 @@ Route::get('/', function () {
 // 각각의 메소드를 통한 Route지정도 가능 하지만 이런식으로 한번에 처리 할 시 라우팅에 대한 규칙을 일괄적으로 생성 할 수 있다.
 // resource 사용 시 자동으로 GET, POST, PUT/PATCH, DELETE 등 HTTP 요청에 따른 메소드가 호출된다.
 Route::resource('/boards', BoardController::class);
-Route::post('/boards/checkPassword', [BoardController::class, 'checkPassword'])->name('boards.checkPassword');
+// Route::post('/boards/checkPassword', [BoardController::class, 'checkPassword'])->name('boards.checkPassword');
 // Route::post('/boards/destroy', [BoardController::class, 'destroy'])->name('boards.destroy');
+Route::post('/boards/{board}/edit', [BoardController::class, 'edit'])->name('boards.edit');
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

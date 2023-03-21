@@ -57,14 +57,32 @@ class BoardController extends Controller {
     }
 
 
-    public function edit(Board $board) {
+    public function edit(Request $request, Board $board) {
+        $boardPw = $request->input('password');
+        $boardIdx = Board::find('boardIdx');
 
-        if ($board->user_idx != Auth::id()) {
+        if ($board->user_idx == Auth::id()) {
+
+            return view('boards.edit', compact('board'));
+        } elseif ($board->user_idx != Auth::id()) {
+
             return redirect()->route('boards.index')
                 ->with('error', '해당 사용자만 수정할 수 있습니다.');
         }
 
-        return view('boards.edit', compact('board'));
+        if (isset($boardIdx)) {
+            return redirect()->route('boards.index')
+            ->with('error', '해당 게시물을 찾을 수 없습니다.');
+        };
+
+        if (Hash::check($boardPw, $board->boardPw)) {
+            return view('boards.edit', compact('board'));
+        } else {
+            return redirect()->route('boards.index')
+            ->with('error', '비밀번호가 일치하지 않습니다.');
+        }
+
+
     }
 
 
@@ -87,32 +105,40 @@ class BoardController extends Controller {
     }
 
 
-    public function destroy(Board $board) {
+    public function destroy(Request $request, Board $board) {
+        $boardPw = $request->input('password');
+        $boardIdx = Board::find('boardIdx');
 
-        if ($board->user_idx != Auth::id()) {
+        if ($board->user_idx == Auth::id()) {
+
+            $board->delete();
+
+            return redirect()->route('boards.index')
+                ->with('success', '삭제되었습니다.');
+
+        } elseif($board->user_idx != Auth::id()) {
+
             return redirect()->route('boards.index')
             ->with('error', '해당 사용자만 삭제할 수 있습니다.');
         }
 
-        $board->delete();
-
-        return redirect()->route('boards.index')
-            ->with('success', '삭제되었습니다.');
-    }
-
-    public function checkPassword(Request $request) {
-        $boardPw = $request->input('password');
-        $board = Board::find($request->input('boardIdx'));
-
-        if (isset($board)) {
-            return response()->json(['result' => 'fail', 'message' => '해당 게시물을 찾을 수 없습니다.']);
+        if (isset($boardIdx)) {
+            return redirect()->route('boards.index')
+            ->with('error', '해당 게시물을 찾을 수 없습니다.');
         };
 
         if (Hash::check($boardPw, $board->boardPw)) {
-            return response()->json(['result' => 'success']);
+
+            $board->delete();
+
+            return redirect()->route('boards.index')
+                ->with('success', '삭제되었습니다.');
+
         } else {
-            return response()->json(['result' => 'fail', 'message' => '비밀번호가 일치하지 않습니다.']);
+            return redirect()->route('boards.index')
+            ->with('error', '비밀번호가 일치하지 않습니다.');
         }
+
     }
 
 }

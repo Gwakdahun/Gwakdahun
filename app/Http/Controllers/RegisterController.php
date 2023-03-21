@@ -54,11 +54,12 @@ class RegisterController extends Controller {
         // $user 객체를 받은 후 로그인
             Auth::login($user);
 
-            return redirect()->route('boards.index');
+            return redirect()->route('login')->with('message', '메일 인증 시 로그인이 가능합니다.');
     }
 
     protected function registered($user) {
         // 인증메일 전송
+        // AuthServiceProvider 에서 메일에 담아 보낼 내용을 정의한다.
         $user->sendEmailVerificationNotification();
     }
 

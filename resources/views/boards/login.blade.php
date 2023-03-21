@@ -5,6 +5,7 @@
     <title>Login</title>
 </head>
 <body>
+    <a href="{{ route('boards.index') }}">게시판</a>
     <h1>Login</h1>
 
     @if($errors->any())
@@ -17,6 +18,11 @@
         </div>
     @endif
 
+    @if(session('message'))
+        <div class="alert alert-success">
+            {{ session('message') }}
+        </div>
+    @endif
 
 <form method="POST" action="{{ route('login.submit') }}">
     @csrf
@@ -41,4 +47,4 @@
     </div>
 
 </form>
-
+<a href="{{ route('register') }}">회원가입</a>

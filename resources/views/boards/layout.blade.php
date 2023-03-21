@@ -28,8 +28,6 @@
             @endauth
 
             @yield('content')
-            @yield('modal')
-            @yield('script')
         </div>
     </body>
 </html>
