@@ -19,6 +19,7 @@
         margin-top: 20px;
         width: 200%;
     }
+
 </style>
 <body>
     <div class="container">
@@ -29,7 +30,7 @@
 
                     {{-- 이름 입력 --}}
                     <div class="card-body">
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" action="{{ route('register.submit') }}">
                             @csrf
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">이름</label>

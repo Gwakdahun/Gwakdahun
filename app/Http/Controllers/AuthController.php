@@ -57,7 +57,7 @@ class AuthController extends Controller
         // 새로운 CSRF 토큰을 생성한다. 이전에 생성된 CSRF 토큰은 무효화 되므로 보안을 강화할 수 있다.
         $request->session()->regenerateToken();
 
-        return redirect('/boards');
+        return redirect('/login');
     }
 
 }

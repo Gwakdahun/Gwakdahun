@@ -31,8 +31,8 @@ Route::get('/', function () {
 // Route::resource('/boards', BoardController::class);
 
 Route::get('/boards', [BoardController::class, 'index'])->name('boards.index');
-Route::get('/boards/create', [BoardController::class, 'create'])->name('boards.create');
 // create가 밑으로 가면 동작을 안한다.
+Route::get('/boards/create', [BoardController::class, 'create'])->name('boards.create');
 Route::get('/boards/{board}', [BoardController::class, 'show'])->name('boards.show');
 Route::post('/boards/{board}/edit', [BoardController::class, 'edit'])->name('boards.edit');
 Route::put('/boards/{board}/update', [BoardController::class, 'update'])->name('boards.update');
@@ -40,10 +40,13 @@ Route::delete('/boards/{board}/destroy', [BoardController::class, 'destroy'])->n
 Route::post('/boards/store', [BoardController::class, 'store'])->name('boards.store');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+// 10분에 5번 시도
+Route::post('/login', [AuthController::class, 'login'])->middleware('guest')->name('login.submit');
+// ->middleware('throttle:5,600')
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 Route::get('/register', [RegisterController::class, 'showRegisterationForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register']);
+Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
 
 // 이메일 검증 링크 발송
 Route::get('/email/verify', function () {

@@ -52,9 +52,9 @@ class RegisterController extends Controller {
         event(new Registered($user = $this->create($request->all())));
 
         // $user 객체를 받은 후 로그인
-            Auth::login($user);
+        Auth::login($user);
 
-            return redirect()->route('login')->with('message', '메일 인증 시 로그인이 가능합니다.');
+        return redirect()->route('login')->with('message', '메일이 전송되었습니다. 인증 후 사용해주세요.');
     }
 
     protected function registered($user) {
