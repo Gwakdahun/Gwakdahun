@@ -1,6 +1,26 @@
-@extends('boards.layout')
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<style type="text/css">
+    .container {
+        margin-top: 10%;
+    }
 
-@section('content')
+    .col-md-6 {
+        margin: 5px;
+    }
+
+    .btn-group {
+        margin-top: 20px;
+        width: 200%;
+    }
+</style>
+<body>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -73,9 +93,12 @@
                             {{-- 보내기 --}}
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                    회원가입
-                                    </button>
+                                    <div class="btn-group" role="group">
+                                        <a class="btn btn btn-outline-primary" href="{{ route('login') }}">로그인</a>
+                                        <a class="btn btn btn-outline-primary" href="{{ route('boards.index') }}">비회원</a>
+                                    </div>
+
+                                    <button type="submit" class="btn btn btn-outline-primary" style="width: 200%; margin-top: 5px;">회원가입</button>
                                 </div> {{-- col-md-6 offset-md-4 end --}}
                             </div> {{-- form-group row mb-0 end --}}
 
@@ -85,4 +108,4 @@
             </div> {{-- col-md-8 end --}}
         </div> {{-- row justify-content-center end --}}
     </div> {{-- container end --}}
-@endsection
+</body>

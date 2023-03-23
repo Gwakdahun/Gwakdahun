@@ -14,7 +14,7 @@
 
         <div class="form-group">
             <label for="content">Content</label>
-            <textarea name="content" id="content" rows="5" cols="20" wrap="hard" class="form-control" style="resize: none";></textarea>
+            <textarea name="content" id="content" rows="5" wrap="hard" class="form-control" style="resize: none";></textarea>
         </div>
 
         @if (empty(auth()->user()))
@@ -31,13 +31,18 @@
 
     <script>
         $(document).ready(function() {
-            //enter => <br>
-            var text = document.getElementById("content").value;
-            text = text.replace(/(?:\r\n|\r|\n)/g, '<br>');
+            // <br> => enter
+            var content = document.getElementById("content");
+                content.value = content.value.replaceAll(/<br>/gi, "\r\n");
+            });
 
-            //<br> => enter
-            var text = document.getElementById("content").value;
-            text = text.replaceAll("<br>", "\r\n");
-        });
+            // enter => <br>
+            $('form').submit(function() {
+                var content = document.getElementById("content");
+                    content.addEventListener('input', function() {
+                    content.value = content.value.replace(/(?:\r\n|\r|\n)/g, '<br>');
+                });
+            });
+
     </script>
 @endsection

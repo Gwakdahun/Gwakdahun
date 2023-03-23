@@ -44,7 +44,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-
     public function board()
     {
         return $this->hasMany(Board::class, 'user_idx');

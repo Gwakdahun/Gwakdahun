@@ -25,5 +25,6 @@
         <a href="{{ route('boards.index') }}">
             <button type="button" class="btn btn-dark" style="display: inline-block;">Back</button>
         </a>
+
     </form>
 @endsection

@@ -16,12 +16,16 @@ class AuthController extends Controller
         // 사용자가 제출한 로그인 폼에서 'email'과 'password' 값을 가져온다.
         $credentials = $request->only('email', 'password');
 
+        // filled : 입력이 있는지 확인
+        $remember = $request->filled('remember');
+
         // Auth::attempt : 인증을 시도하며, 성공 시 true, 실패 시 false를 반환
-        if(Auth::attempt($credentials)) {
+        if(Auth::attempt($credentials, $remember)) {
 
             // 인증에 성공 시 세션을 다시 생성한다. 보안 상의 이유이며 하이재킹과 같은 공격을 방지하기 위함.
             $request->session()->regenerate();
 
+            // 사용자의 이메일 인증을 체크한다.
             if(Auth::user()->email_verified_at) {
 
                 // 사용자가 로그인을 시도하기 전에 원래의 목적지로 사용자를 다시 보낸다.
@@ -31,13 +35,13 @@ class AuthController extends Controller
 
                 Auth::logout();
 
-                return back()->withErrors([
+                return back()->withErrors ([
                     'email' => '이메일 인증을 완료해주세요.',
                 ]);
             } // else end
         } // attempt end
 
-        return back()->withErrors([
+        return back()->withErrors ([
             'email' => '이메일 또는 비밀번호가 일치하지 않습니다.',
         ]); // Errors end
     }

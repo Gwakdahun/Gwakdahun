@@ -5,7 +5,6 @@
 @endphp
 @extends('boards.layout')
 
-
 @section('content')
 
     <h2 class="mt-4 mb-3">게시판</h2>
@@ -17,20 +16,26 @@
     @endif
 
     @if(session('message'))
-        <div class="alert alert-success">
+        <div class="alert alert-secondary">
             {{ session('message') }}
         </div>
     @endif
 
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <a href="{{ route('boards.create') }}">
-        <button type="button" class="btn btn-dark" style="float: right;">Create</button>
+        <button type="button" class="btn btn-dark" style="float: right;">등록</button>
     </a>
 
 
     <table class="table table-striped table-hover">
         <colgroup>
-            <col width="5%"/>
-            <col width="55%"/>
+            <col width="10%"/>
+            <col width="50%"/>
             <col width="20%"/>
             <col width="20%"/>
         </colgroup>
@@ -49,24 +54,27 @@
             @foreach ($boards as $board)
                 <tr id="{{ $board->idx }}" style="text-align: center">
 
-                    <td>{{ $loop->parent->last }}</td>
+                    <td>{{ $board->index }}</td>
+
                     {{-- 아래 코드는 좋지 않은 예시 html에서 값을 유추해서 의도하지 않은 페이지로 들어갈 수 있다. --}}
                     {{-- <td onclick="window.location.href='{{ route('boards.show', $board->idx) }}'">{{ Str::limit($board->content, 50) }}</td> --}}
 
-                    <td><a href="{{ route('boards.show', $board->idx) }}">{{ Str::limit($board->title, 50) }}</a></td>
-
+                    <td style="text-align:left; padding-left:24%"><a href="{{ route('boards.show', $board->idx) }}">
+                        @if ($board->created_at != $board->updated_at)
+                            {{ Str::limit($board->title, 50) }}</a><span style="color:grey; font-size:60%;">(수정됨)</span></td>
+                        @else
+                            {{ Str::limit($board->title, 50) }}</a></td>
+                        @endif
                     <td>
+
                         @if($board->user)
-                            {{ $board->user->name }}
+                            {{ Str::mask($board->user->name, '*', 1) }}
                         @else
                             비회원
                         @endif
                     </td>
 
                     <td>{{ $board->created_at ? $board->created_at->format('Y-m-d') : "" }}</td>
-
-                            {{-- HTML 양식은 PUT, PATCH, DELETE를 요청할 수 없다. 이러한 동작을 하려면 method 필드를 추가해야한다. --}}
-
                 </tr>
             @endforeach
         </tbody>
