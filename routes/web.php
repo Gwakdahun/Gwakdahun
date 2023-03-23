@@ -41,8 +41,8 @@ Route::post('/boards/store', [BoardController::class, 'store'])->name('boards.st
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 // 10분에 5번 시도
-Route::post('/login', [AuthController::class, 'login'])->middleware('guest')->name('login.submit');
-// ->middleware('throttle:5,600')
+Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+// ->middleware('throttle:5,600') ->middleware('guest')
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/register', [RegisterController::class, 'showRegisterationForm'])->name('register');

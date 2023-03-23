@@ -82,7 +82,7 @@ class BoardController extends Controller {
         // 유저 아이디가 맞지 않을 경우
         } elseif ($board->user_idx != Auth::id()) {
 
-            return redirect()->route('boards.index')
+            return redirect()->route('boards.show', $board->idx)
                 ->with('error', '해당 사용자만 수정할 수 있습니다.');
         } else {
 
@@ -93,8 +93,9 @@ class BoardController extends Controller {
 
             } else {
 
-                return redirect()->route('boards.index')
-                    ->with('error', '비밀번호가 일치하지 않습니다.');
+                return redirect()->route('boards.show', $board->idx)
+                    ->with('error', '비밀번호가 일치하지 않습니다.')
+                    ->withInput([ 'focus' => 'password']);
             }
         }
 
@@ -110,7 +111,7 @@ class BoardController extends Controller {
     public function update(Request $request, Board $board) {
 
         if ($board->user_idx != Auth::id()) {
-            return redirect()->route('boards.index')
+            return redirect()->route('boards.show', $board->idx)
                 ->with('error', '해당 사용자만 수정할 수 있습니다.');
         }
 
@@ -138,8 +139,8 @@ class BoardController extends Controller {
 
         } elseif($board->user_idx != Auth::id()) {
 
-            return redirect()->route('boards.index')
-            ->with('error', '해당 사용자만 삭제할 수 있습니다.');
+            return redirect()->route('boards.show', $board->idx)
+                ->with('error', '해당 사용자만 삭제할 수 있습니다.');
 
         } else {
 
@@ -151,8 +152,10 @@ class BoardController extends Controller {
                     ->with('success', '게시글이 삭제되었습니다.');
 
             } else {
-                return redirect()->route('boards.index')
-                    ->with('error', '비밀번호가 일치하지 않습니다.');
+
+                return redirect()->route('boards.show', $board->idx)
+                    ->with('error', '비밀번호가 일치하지 않습니다.')
+                    ->withInput([ 'focus' => 'password']);
             }
         }
 

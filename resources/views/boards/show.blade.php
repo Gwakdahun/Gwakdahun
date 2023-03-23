@@ -4,6 +4,12 @@
 
     <h1>{{ $board->title }}</h1>
 
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="mb-3">
         <a href="{{ route('boards.index') }}" class="btn btn-dark">Back</a>
 
@@ -55,7 +61,7 @@
             <form method="POST" id="passwordForm">
                 <div class="form-group">
                     <label for="password-input">Password:</label>
-                    <input type="password" class="form-control" id="password-input" name="password" style="width: 30%";>
+                    <input type="password" class="form-control" id="password-input" name="password" style="width: 30%"; autofocus>
                 </div>
             </form>
         @endif

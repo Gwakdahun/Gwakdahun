@@ -51,8 +51,11 @@ class RegisterController extends Controller {
         // event(new Registered($user)) : 아래에 있는 SendEmailVerificationNotification 리스너를 가져온다. 해당 리스너는 이메일 검증 링크를 보낸다.
         event(new Registered($user = $this->create($request->all())));
 
+        $credentials = $request->only('email', 'password');
+        Auth::attempt($credentials);
+
         // $user 객체를 받은 후 로그인
-        Auth::login($user);
+        // Auth::login($user);
 
         return redirect()->route('login')->with('message', '메일이 전송되었습니다. 인증 후 사용해주세요.');
     }
