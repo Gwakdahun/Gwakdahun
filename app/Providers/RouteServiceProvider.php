@@ -45,11 +45,11 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
 
-        RateLimiter::for('login', function () {
-            return Limit::perMinute(0.5)->by('login')->response(function () {
-                return redirect()->route('login')->with('error', '로그인 시도 횟수 초과');
-            });
-        });
+        // RateLimiter::for('login', function () {
+        //     return Limit::perMinute(0.5)->by('login')->response(function () {
+        //         return redirect()->route('login')->with('error', '로그인 시도 횟수 초과');
+        //     });
+        // });
 
     }
 }

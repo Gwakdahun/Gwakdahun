@@ -14,6 +14,7 @@
     .row>* {
         width: 40%;
     }
+
     .btn-group {
         margin-top: 30px;
         width: 100%;

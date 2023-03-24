@@ -90,7 +90,6 @@ class BoardController extends Controller {
             if (Hash::check($boardPw, $board->boardPw)) {
 
                 return view('boards.edit', compact('board'));
-
             } else {
 
                 return redirect()->route('boards.show', $board->idx)
@@ -137,7 +136,7 @@ class BoardController extends Controller {
             return redirect()->route('boards.index')
                 ->with('success', '게시글이 삭제되었습니다.');
 
-        } elseif($board->user_idx != Auth::id()) {
+        } elseif ($board->user_idx != Auth::id()) {
 
             return redirect()->route('boards.show', $board->idx)
                 ->with('error', '해당 사용자만 삭제할 수 있습니다.');

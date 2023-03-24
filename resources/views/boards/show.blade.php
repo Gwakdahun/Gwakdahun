@@ -54,6 +54,7 @@
         <div class="card-footer text-muted">
             {{ $board->created_at ? $board->created_at->format('Y-m-d, H:i') : "" }}
         </div>
+
     </div> {{-- card end --}}
 
     <div class="password-body">
