@@ -34,9 +34,9 @@ class AuthServiceProvider extends ServiceProvider
             // 'verification.verify' : 라우트명
             // $notifiable : 이메일 검증 기능을 사용하는데 필요한 사용자 정보를 제공한다.
             // MustVerifyEmail 인터페이스를 구현한 사용자 객체를 나타낸다.
-            // $url = URL::temporarySignedRoute(
-            //     'verification.verify', Carbon::now()->addMinutes(10), ['id' => $notifiable->getKey(), 'hash' => sha1($notifiable->getEmailForVerification())]
-            // );
+            $url = URL::temporarySignedRoute(
+                'verification.verify', Carbon::now()->addMinutes(60), ['id' => $notifiable->getKey(), 'hash' => sha1($notifiable->getEmailForVerification())]
+            );
 
             // 메일 내용
             return (new MailMessage)

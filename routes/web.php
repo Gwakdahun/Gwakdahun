@@ -42,7 +42,7 @@ Route::post('/boards/store', [BoardController::class, 'store'])->name('boards.st
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 // 10분에 5번 시도
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
-// ->middleware('throttle:5,600') ->middleware('guest')
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/register', [RegisterController::class, 'showRegisterationForm'])->name('register');
@@ -53,18 +53,17 @@ Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
-
 // 이메일 검증 핸들러
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
 
-    return redirect('/boards');
+    return redirect('/login');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 
 // 이메일 검증 재발송
-// Route::post('/email/verification-notification', function (Request $request) {
-//     $request->user()->sendEmailVerificationNotification();
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
 
-//     return back()->with('message', 'Verification link sent!');
-// })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
